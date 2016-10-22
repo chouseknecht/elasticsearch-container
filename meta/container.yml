@@ -2,7 +2,12 @@ elasticsearch:
   image: "centos:7"
   ports:
   - 9200:9200
+  expose:
+  - 9300
   restart: always
+  user: elastic
+  working_dir: /usr/share/elasticsearch/bin
+  command: [elasticsearch] 
   #volumes:
   #- <your volume>:/var/lib/elastic/data
   #- <your volume>:/var/lib/elastic/logs
