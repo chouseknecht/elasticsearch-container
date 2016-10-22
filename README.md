@@ -15,6 +15,7 @@ Adds an elasticsearch service to your [Ansible Container](https://github.com/ans
 
    # Initialize the project
    $ ansible-container init
+   ```
 
 ## Role Variables
 
