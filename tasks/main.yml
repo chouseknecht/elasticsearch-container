@@ -16,6 +16,29 @@
 - name: Install Elasticsearch.
   yum: pkg=elasticsearch state=installed
 
+- name: Create user elastic
+  user:
+    name: elastic
+    uid: 1000
+    group: root
+    createhome: no
+  
+- name: Create data directory
+  file:
+    path: "{{ elasticsearch_data }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0775
+
+- name: Create log directory
+  file:
+    path: "{{ elasticsearch_logs }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0775
+
 - name: Configure Elasticsearch.
   template:
     src: elasticsearch.yml.j2
@@ -23,5 +46,4 @@
     owner: root
     group: elasticsearch
     mode: 0750
-
 
