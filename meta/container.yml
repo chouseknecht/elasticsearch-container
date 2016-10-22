@@ -9,6 +9,7 @@ elasticsearch:
   working_dir: /usr/share/elasticsearch/bin
   command: [elasticsearch] 
   #volumes:
-  #- <your volume>:/var/lib/elastic/data
-  #- <your volume>:/var/lib/elastic/logs
+  #- <your volume>:/usr/share/elasticsearch/data
+  #- <your volume>:/usr/share/elasticsearch/logs
+  #- <your volume>:/usr/share/elasticsearch/config
    

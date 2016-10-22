@@ -28,15 +28,15 @@
     group: root
     mode: 0775
   with_items:
-    - /usr/share/elasticsearch/config
-    - /usr/share/elasticsearch/config/scripts
+    - "{{ elasticsearch_config }}"
+    - "{{ elasticsearch_config }}/scripts"
     - "{{ elasticsearch_data }}"
     - "{{ elasticsearch_logs }}"
 
 - name: Configure Elasticsearch.
   template:
     src: elasticsearch.yml.j2
-    dest: /usr/share/elasticsearch/config/elasticsearch.yml
+    dest: "{{ elasticsearch_config }}/elasticsearch.yml"
     owner: root
     group: elasticsearch
     mode: 0750
