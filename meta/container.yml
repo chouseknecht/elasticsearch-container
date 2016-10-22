@@ -1,9 +1,8 @@
 elasticsearch:
+  image: "centos:7"
   ports:
   - 9200:9200
-
   restart: always
-
   #volumes:
   #- <your volume>:/var/lib/elastic/data
   #- <your volume>:/var/lib/elastic/logs
