@@ -5,7 +5,7 @@ elasticsearch:
   expose:
   - 9300
   restart: always
-  user: elastic
+  user: elasticsearch
   working_dir: /usr/share/elasticsearch/bin
   command: [elasticsearch] 
   #volumes:
