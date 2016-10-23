@@ -33,11 +33,14 @@
     - "{{ elasticsearch_data }}"
     - "{{ elasticsearch_logs }}"
 
-- name: Configure Elasticsearch.
+- name: Copy configuration templates.
   template:
-    src: elasticsearch.yml.j2
-    dest: "{{ elasticsearch_config }}/elasticsearch.yml"
+    src: "{{ item }}.j2"
+    dest: "{{ elasticsearch_config }}/{{ item }}"
     group: root
     owner: elasticsearch
     mode: 0750
+  with_items:
+    - elasticsearch.yml
+    - logging.yml
 
