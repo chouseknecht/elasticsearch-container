@@ -7,7 +7,7 @@ elasticsearch:
   restart: always
   user: elasticsearch
   working_dir: /usr/share/elasticsearch/bin
-  command: [elasticsearch] 
+  command: [./elasticsearch] 
   #volumes:
   #- <your volume>:/usr/share/elasticsearch/data
   #- <your volume>:/usr/share/elasticsearch/logs
