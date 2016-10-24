@@ -1,5 +1,7 @@
 # elasticsearch-container   
 
+[![Build Status](https://travis-ci.org/chouseknecht/elasticsearch-container.svg?branch=master)](https://travis-ci.org/chouseknecht/elasticsearch-container)
+
 Adds an elasticsearch service to your [Ansible Container](https://github.com/ansible/ansible-container) project. To install the service, do the following:
 
 ```
