@@ -1,5 +1,26 @@
 ---
 - hosts: localhost
-  remote_user: root
-  roles:
-    - elasticsearch-container/
+  gather_facts: no 
+  connection: local 
+  tasks:
+    - name: Wait for the Elasticsearch cluster to accept requests
+      wait_for:
+        host: 0.0.0.0
+        port: 9200
+        delay: 10
+        timeout: 60
+
+    - name: Check the health of the Elasticsearch cluster
+      uri: 
+        url: http://0.0.0.0:9200/_cat/health?v
+        return_content: yes
+      register: output
+
+    - name: Show healthcheck output
+      debug:
+        var: output
+
+    - name: Health response should contain 'green'
+      assert: 
+        that: 
+          - "'green' in output.content"
