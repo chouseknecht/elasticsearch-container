@@ -49,12 +49,12 @@
     - elasticsearch.yml
   when: not stat_output.stat.exists
 
-- name: Stat config/logging.yml
+- name: Stat config/log4j2.properties
   stat:
-    path: "{{ elasticsearch_config }}/logging.yml"
+    path: "{{ elasticsearch_config }}/log4j2.properties"
   register: stat_output
 
-- name: Template logging.yml 
+- name: Template log4j2.properties 
   template:
     src: "{{ item }}.j2"
     dest: "{{ elasticsearch_config }}/{{ item }}"
@@ -62,6 +62,17 @@
     owner: elasticsearch
     mode: 0750
   with_items:
-    - logging.yml
+    - log4j2.properties
   when: not stat_output.stat.exists
 
+
+- name: fix memlock issues
+  pam_limits:
+    backup: yes
+    domain: '{{ item[0] }}'
+    limit_type: hard
+    limit_item: '{{ item[1] }}'
+    value: unlimited
+  with_nested:
+    - ['elasticsearch', 'root']
+    - ['as', 'memlock']
