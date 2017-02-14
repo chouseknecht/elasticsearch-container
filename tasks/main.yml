@@ -27,7 +27,9 @@
     owner: elasticsearch 
     group: root
     mode: 0775
+    recurse: yes
   with_items:
+    - "{{ elasticsearch_config }}/../"
     - "{{ elasticsearch_config }}"
     - "{{ elasticsearch_config }}/scripts"
     - "{{ elasticsearch_data }}"
