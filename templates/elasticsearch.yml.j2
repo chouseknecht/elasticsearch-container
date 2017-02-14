@@ -15,7 +15,7 @@
 #
 # Use a descriptive name for your cluster:
 #
-# cluster.name: my-application
+cluster.name: ${CLUSTER_NAME}
 #
 # ------------------------------------ Node ------------------------------------
 #
@@ -67,10 +67,11 @@ http.port: {{ elasticsearch_http_port }}
 # The default list of hosts is ["127.0.0.1", "[::1]"]
 #
 # discovery.zen.ping.unicast.hosts: ["host1", "host2"]
+discovery.zen.ping.unicast.hosts: {{ elasticsearch_discovery_hosts |join(',') }}
 #
 # Prevent the "split brain" by configuring the majority of nodes (total number of nodes / 2 + 1):
 #
-# discovery.zen.minimum_master_nodes: 3
+discovery.zen.minimum_master_nodes: ${MINIMUM_MASTER_NODES}
 #
 # For more information, see the documentation at:
 # <http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-discovery.html>
@@ -94,4 +95,4 @@ http.port: {{ elasticsearch_http_port }}
 #
 # action.destructive_requires_name: true
 script.inline: {{ elasticsearch_script_inline }}
-script.indexed: {{ elasticsearch_script_indexed }}
+script.stored: {{ elasticsearch_script_indexed }}

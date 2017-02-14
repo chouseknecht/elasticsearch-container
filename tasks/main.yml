@@ -27,18 +27,20 @@
     owner: elasticsearch 
     group: root
     mode: 0775
+    recurse: yes
   with_items:
+    - "{{ elasticsearch_config }}/../"
     - "{{ elasticsearch_config }}"
     - "{{ elasticsearch_config }}/scripts"
     - "{{ elasticsearch_data }}"
     - "{{ elasticsearch_logs }}"
 
-- name: Stat config/elasticsearch.yml
-  stat:
-    path: "{{ elasticsearch_config }}/elasticsearch.yml"
-  register: stat_output
+- command: ls -lah /usr/share/elasticsearch/config
+  register: result
 
-- name: Template elasticsearch.yml
+- debug: msg={{result}}
+
+- name: Template config
   template:
     src: "{{ item }}.j2"
     dest: "{{ elasticsearch_config }}/{{ item }}"
@@ -47,21 +49,16 @@
     mode: 0750
   with_items:
     - elasticsearch.yml
-  when: not stat_output.stat.exists
+    - log4j2.properties
 
-- name: Stat config/logging.yml
-  stat:
-    path: "{{ elasticsearch_config }}/logging.yml"
-  register: stat_output
 
-- name: Template logging.yml 
-  template:
-    src: "{{ item }}.j2"
-    dest: "{{ elasticsearch_config }}/{{ item }}"
-    group: root
-    owner: elasticsearch
-    mode: 0750
-  with_items:
-    - logging.yml
-  when: not stat_output.stat.exists
-
+- name: fix memlock issues
+  pam_limits:
+    backup: yes
+    domain: '{{ item[0] }}'
+    limit_type: hard
+    limit_item: '{{ item[1] }}'
+    value: unlimited
+  with_nested:
+    - ['elasticsearch', 'root']
+    - ['as', 'memlock']
