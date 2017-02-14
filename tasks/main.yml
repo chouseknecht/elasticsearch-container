@@ -33,7 +33,7 @@
     - "{{ elasticsearch_data }}"
     - "{{ elasticsearch_logs }}"
 
-- command: ls -lah /usr/share/elasticsearch/*
+- command: ls -lah /usr/share/elasticsearch/{data,config,logs,config/scripts}
   register: result
 
 - debug: msg={{result}}
