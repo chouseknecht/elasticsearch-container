@@ -33,7 +33,12 @@
     - "{{ elasticsearch_data }}"
     - "{{ elasticsearch_logs }}"
 
-- name: Template elasticsearch.yml
+- command: ls -lah /usr/share/elasticsearch/*
+  register: result
+
+- debug: msg={{result}}
+
+- name: Template config
   template:
     src: "{{ item }}.j2"
     dest: "{{ elasticsearch_config }}/{{ item }}"
@@ -42,15 +47,6 @@
     mode: 0750
   with_items:
     - elasticsearch.yml
-
-- name: Template log4j2.properties 
-  template:
-    src: "{{ item }}.j2"
-    dest: "{{ elasticsearch_config }}/{{ item }}"
-    group: root
-    owner: elasticsearch
-    mode: 0750
-  with_items:
     - log4j2.properties
 
 
